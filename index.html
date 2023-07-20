@@ -15,7 +15,32 @@
       crossorigin="anonymous"></script>
   </head>
   <body>
-    <header class="bg-dark bg-gradient">Weather Dashboard</header>
+    <header class="bg-info bg-gradient">
+      <h1 class="d-flex justify-content-end text-white">Weather Dashboard</h1>
+    </header>
+    <div class="d-flex">
+      <aside>
+        <form>
+          <label for="city-search">Search for a City:</label>
+          <input type="text" name="city-search" />
+          <button type="submit">Search</button>
+        </form>
+        <br />
+        <ul></ul>
+      </aside>
+      <main class="d-flex flex-column">
+        <section>
+          <h2></h2>
+          <span></span>
+          <span></span>
+          <span></span>
+        </section>
+        <section>
+          <h3></h3>
+          <ul></ul>
+        </section>
+      </main>
+    </div>
     <script src="src/script.js"></script>
   </body>
 </html>
