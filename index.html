@@ -19,25 +19,28 @@
       <h1 class="d-flex justify-content-end text-white">Weather Dashboard</h1>
     </header>
     <div class="d-flex">
+      <!-- Sidebar -->
       <aside>
         <form>
           <label for="city-search">Search for a City:</label>
-          <input type="text" name="city-search" />
-          <button type="submit">Search</button>
+          <input type="text" name="city-search" id="citySearchInput" />
+          <button type="submit" id="searchButton">Search</button>
         </form>
         <br />
-        <ul></ul>
+        <ul id="cityHistory"></ul>
       </aside>
+      <!-- Main shown city -->
       <main class="d-flex flex-column">
         <section>
-          <h2></h2>
-          <span></span>
-          <span></span>
-          <span></span>
+          <h2 id="activeCityName"></h2>
+          <span id="activeCityTemp"></span>
+          <span id="activeCityWind"></span>
+          <span id="activeCityHumidity"></span>
         </section>
+        <!-- Upcoming forecast -->
         <section>
-          <h3></h3>
-          <ul></ul>
+          <h3>5-Day Forecast:</h3>
+          <ul class="d-flex" id="forecast"></ul>
         </section>
       </main>
     </div>
