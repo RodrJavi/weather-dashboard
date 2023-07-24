@@ -1,31 +1,43 @@
 const cityRequest = $("#citySearchInput");
-const searchButton = $("#searchButton");
+const searchForm = $("#searchForm");
+const searchInput = $("#citySearchInput");
 const cityHistory = $("#cityHistory");
-const activeCity = $("activeCityName");
-const activeTemp = $("activeCityTemp");
-const activeWind = $("activeCityWind");
+const activeCity = $("#activeCityName");
+const activeTemp = $("#activeCityTemp");
+const activeWind = $("#activeCityWind");
 const activeHumidity = $("#activeCityHumidity");
-const forecastList = $("forecast");
-let weatherUrl = `api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=10a92e1f728ea533565d449485dd660b`;
+const forecastList = $("#forecast");
 
-// let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=Miami&limit=5&appid=10a92e1f728ea533565d449485dd660b`;
+$(searchForm).on("submit", (e) => {
+  e.preventDefault();
+  let searchedCity = $(searchInput).val();
+  let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${searchedCity}&limit=5&appid=10a92e1f728ea533565d449485dd660b`;
+  let coords = fetch(cityUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      // let searchedLat = data[0].lat;
+      // let searchedLon = data[0].lon;
+      let coordinates = [data[0].lat, data[0].lon];
+      return coordinates;
+    });
 
-let testUrl =
-  "http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid=10a92e1f728ea533565d449485dd660b";
-
-// fetch(testUrl).then(function (response) {
-//   return response.json();
-// });
-// .then(function (data) {
-//   //looping over the fetch response and inserting the URL of your repos into a list
-//   for (var i = 0; i < data.length; i++) {
-//     //Create a list element
-//     var listItem = document.createElement("li");
-
-//     //Set the text of the list element to the JSON response's .html_url property
-//     listItem.textContent = data[i].html_url;
-
-//     //Append the li element to the id associated with the ul element.
-//     repoList.appendChild(listItem);
-//   }
-// });
+  // return `http://api.openweathermap.org/data/2.5/forecast?lat=${searchedLat}&lon=${searchedLon}&units=imperial&appid=10a92e1f728ea533565d449485dd660b`;
+  // weatherUrl.then(function (data) {
+  //   fetch(data)
+  //     .then(function (response) {
+  //       return response.json();
+  //     })
+  //     .then(function (data) {
+  //       console.log(data);
+  //       $(activeCity).text(data.city.name);
+  //       $(activeTemp).text(data.list[0].main.temp);
+  //       $(activeWind).text(data.list[0].wind.speed);
+  //       $(activeHumidity).text(data.list[0].main.humidity);
+  //       let days = [8, 16, 24, 32, 40, 48];
+  //     });
+  // });
+  console.log(coords);
+});

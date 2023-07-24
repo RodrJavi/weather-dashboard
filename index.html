@@ -21,7 +21,7 @@
     <div class="d-flex">
       <!-- Sidebar -->
       <aside>
-        <form>
+        <form id="searchForm">
           <label for="city-search">Search for a City:</label>
           <input type="text" name="city-search" id="citySearchInput" />
           <button type="submit" id="searchButton">Search</button>
@@ -31,16 +31,22 @@
       </aside>
       <!-- Main shown city -->
       <main class="d-flex flex-column">
-        <section>
+        <section class="d-flex flex-column">
           <h2 id="activeCityName"></h2>
-          <span id="activeCityTemp"></span>
-          <span id="activeCityWind"></span>
-          <span id="activeCityHumidity"></span>
+          <span id="activeCityTemp"></span><span>&deg;F</span>
+          <span id="activeCityWind"></span><span> MPH</span>
+          <span id="activeCityHumidity"></span><span> %</span>
         </section>
         <!-- Upcoming forecast -->
         <section>
           <h3>5-Day Forecast:</h3>
-          <ul class="d-flex" id="forecast"></ul>
+          <ul class="d-flex" id="forecast">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
         </section>
       </main>
     </div>
