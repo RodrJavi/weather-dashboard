@@ -15,16 +15,24 @@ function updateHistoryList() {
     for (let i = 0; i < history.length; i++) {
       let cityLi = $("<li>");
       cityLi.text(history[i]);
+      cityLi.on("click", (e) => {
+        searchAndDisplay(e, history[i]);
+      });
       $(cityHistory).append(cityLi);
     }
   }
 }
 updateHistoryList();
 
-$(searchForm).on("submit", async (e) => {
-  e.preventDefault();
+async function searchAndDisplay(event, cityName) {
+  event.preventDefault();
   let cityData = [];
-  let searchedCity = $(searchInput).val();
+  let searchedCity;
+  if (!cityName) {
+    searchedCity = $(searchInput).val();
+  } else {
+    searchedCity = cityName;
+  }
   let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${searchedCity}&limit=5&appid=10a92e1f728ea533565d449485dd660b`;
 
   if (!history) {
@@ -88,4 +96,8 @@ $(searchForm).on("submit", async (e) => {
         $(forecastList).append(dayLi);
       }
     });
+}
+
+$(searchForm).on("submit", (e) => {
+  searchAndDisplay(e);
 });
