@@ -7,12 +7,35 @@ const activeTemp = $("#activeCityTemp");
 const activeWind = $("#activeCityWind");
 const activeHumidity = $("#activeCityHumidity");
 const forecastList = $("#forecast");
+let history = JSON.parse(localStorage.getItem("cityHistory"));
+
+function updateHistoryList() {
+  if (history) {
+    $(cityHistory).html("");
+    for (let i = 0; i < history.length; i++) {
+      let cityLi = $("<li>");
+      cityLi.text(history[i]);
+      $(cityHistory).append(cityLi);
+    }
+  }
+}
+updateHistoryList();
 
 $(searchForm).on("submit", async (e) => {
   e.preventDefault();
   let cityData = [];
   let searchedCity = $(searchInput).val();
   let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${searchedCity}&limit=5&appid=10a92e1f728ea533565d449485dd660b`;
+
+  if (!history) {
+    history = [searchedCity];
+  } else {
+    history.push(searchedCity);
+  }
+
+  localStorage.setItem("cityHistory", JSON.stringify(history));
+  updateHistoryList();
+
   await fetch(cityUrl)
     .then(function (response) {
       return response.json();
@@ -20,7 +43,6 @@ $(searchForm).on("submit", async (e) => {
     .then(function (data) {
       cityData = data;
     });
-  // console.log(cityData[0].lat);
 
   let currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${cityData[0].lat}&lon=${cityData[0].lon}&units=imperial&appid=10a92e1f728ea533565d449485dd660b`;
 
@@ -43,7 +65,27 @@ $(searchForm).on("submit", async (e) => {
       return response.json();
     })
     .then(function (data) {
-      let days = [8, 16, 24, 32, 40, 48];
       console.log(data);
+      let futureDayCount = 0;
+      $(forecastList).html("");
+      for (let i = 1; i < 39; i += 8) {
+        futureDayCount += 1;
+        let dayLi = $("<li>");
+        let dateSpan = $("<span>");
+        let tempSpan = $("<span>");
+        let windSpan = $("<span>");
+        let humiditySpan = $("<span>");
+        dateSpan.text(dayjs().add(futureDayCount, "day").format("MM/D/YYYY"));
+        tempSpan.html(`Temp: ${data.list[i].main.temp} &deg;F`);
+        windSpan.html(`Wind: ${data.list[i].wind.speed} MPH`);
+        humiditySpan.html(`Humidity: ${data.list[i].main.humidity} %`);
+        dateSpan.addClass("fw-bold");
+        dayLi.append(dateSpan);
+        dayLi.append(tempSpan);
+        dayLi.append(windSpan);
+        dayLi.append(humiditySpan);
+        dayLi.addClass("d-flex flex-column p-3 bg-info text-white gap-2");
+        $(forecastList).append(dayLi);
+      }
     });
 });
