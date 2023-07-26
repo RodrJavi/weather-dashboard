@@ -15,6 +15,7 @@ function updateHistoryList() {
     for (let i = 0; i < history.length; i++) {
       let cityLi = $("<li>");
       cityLi.text(history[i]);
+      cityLi.addClass("border border-2 p-2");
       cityLi.on("click", (e) => {
         searchAndDisplay(e, history[i]);
       });
@@ -37,6 +38,7 @@ async function searchAndDisplay(event, cityName) {
 
   if (!history) {
     history = [searchedCity];
+  } else if (history.includes(searchedCity)) {
   } else {
     history.push(searchedCity);
   }
@@ -60,7 +62,6 @@ async function searchAndDisplay(event, cityName) {
       return response.json();
     })
     .then(function (data) {
-      // console.log(data);
       $(activeCity).html(`${data.name} (${dayjs().format("MM/D/YYYY")})`);
       $(activeTemp).html(`Temp: ${data.main.temp} &deg;F`);
       $(activeWind).html(`Wind: ${data.wind.speed} MPH`);
@@ -73,7 +74,6 @@ async function searchAndDisplay(event, cityName) {
       return response.json();
     })
     .then(function (data) {
-      console.log(data);
       let futureDayCount = 0;
       $(forecastList).html("");
       for (let i = 1; i < 39; i += 8) {
