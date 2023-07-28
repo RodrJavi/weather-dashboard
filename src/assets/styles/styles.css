@@ -1,3 +1,11 @@
 ul {
   list-style-type: none;
 }
+
+img {
+  display: none;
+}
+
+img[src] {
+  display: block;
+}
