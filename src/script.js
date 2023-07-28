@@ -86,7 +86,6 @@ async function searchAndDisplay(event, cityName) {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
         let futureDayCount = 0;
         $(forecastList).html("");
         for (let i = 1; i < 39; i += 8) {
