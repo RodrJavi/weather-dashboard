@@ -34,7 +34,7 @@ async function searchAndDisplay(event, cityName) {
   } else {
     searchedCity = cityName;
   }
-  let cityUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${searchedCity}&limit=5&appid=10a92e1f728ea533565d449485dd660b`;
+  let cityUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${searchedCity}&limit=5&appid=10a92e1f728ea533565d449485dd660b`;
 
   if (!history) {
     history = [searchedCity];
@@ -68,7 +68,7 @@ async function searchAndDisplay(event, cityName) {
       $(activeHumidity).html(`Humidity: ${data.main.humidity} %`);
     });
 
-  let forecastUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${cityData[0].lat}&lon=${cityData[0].lon}&units=imperial&appid=10a92e1f728ea533565d449485dd660b`;
+  let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${cityData[0].lat}&lon=${cityData[0].lon}&units=imperial&appid=10a92e1f728ea533565d449485dd660b`;
   fetch(forecastUrl)
     .then(function (response) {
       return response.json();
